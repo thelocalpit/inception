@@ -23,16 +23,16 @@ end_time=$((start_time + 30))
 
 while [ $(date +%s) -lt $end_time ]; do
     if check_mariadb; then
-        echo "[========MARIADB IS UP AND RUNNING========]"
+        echo "[MARIADB IS UP"
         break
     else
-        echo "[========WAITING FOR MARIADB TO START...========]"
+        echo "[WAITING...]"
         sleep 2
     fi
 done
 
 if [ $(date +%s) -ge $end_time ]; then
-    echo "[========MARIADB IS NOT RESPONDING========]"
+    echo "[MARIADB IS NOT WORKING]"
     exit 1
 fi
 
@@ -40,7 +40,6 @@ fi
 
 # Se wp-config.php non esiste, significa che WordPress non è configurato
 if [ ! -f wp-config.php ]; then
-    echo "[========INSTALLING WORDPRESS========]"
 
     # Scarica i file core di WordPress
     wp core download --allow-root
@@ -51,9 +50,9 @@ if [ ! -f wp-config.php ]; then
     # Installa WordPress con il titolo, l'utente admin, la password e l'email forniti
     wp core install --url="$URL_DOMAIN_NAME" --title="$WP_TITLE" --admin_user="$WP_ADMIN_NAME" --admin_password="$WP_ADMIN_PASS" --admin_email="$WP_ADMIN_EMAIL" --allow-root
 
-    echo "[========WORDPRESS INSTALLED========]"
+    echo "[WORDPRESS INSTALLED]"
 else
-    echo "[========WORDPRESS IS ALREADY INSTALLED========]"
+    echo "[WORDPRESS IS ALREADY INSTALLED]"
 fi
 
 # Crea un nuovo utente se non esiste già
@@ -70,7 +69,7 @@ if ! wp user get "$WP_USER_NAME" --allow-root; then
         exit 1
     fi
 else
-    echo "[========USER $WP_USER_NAME ALREADY EXISTS========]"
+    echo "[USER $WP_USER_NAME ALREADY EXISTS]"
 fi
 
 #---------------------------------------------------php config---------------------------------------------------#
