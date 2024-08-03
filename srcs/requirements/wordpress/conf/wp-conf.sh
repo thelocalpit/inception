@@ -44,8 +44,22 @@ wp core download --allow-root
 wp core config --dbhost=mariadb:3306 --dbname="$DB_NAME" --dbuser="$DB_USER" --dbpass="$DB_PASS" --allow-root
 # install wordpress with the given title, admin username, password and email
 wp core install --url="$URL_DOMAIN_NAME" --title="$WP_TITLE" --admin_user="$WP_ADMIN_NAME" --admin_password="$WP_ADMIN_PASS" --admin_email="$WP_ADMIN_EMAIL" --allow-root
-#create a new user with the given username, email, password and role
-wp user create "$WP_USER_NAME" --user_pass="$WP_USER_PASS" --user_email="$WP_USER_EMAIL" --role="$WP_USER_ROLE"  --allow-root
+
+# Crea un nuovo utente
+echo "Creating user with:"
+echo "Username: $WP_USER_NAME"
+echo "Email: $WP_USER_EMAIL"
+echo "Role: $WP_USER_ROLE"
+
+wp user create "$WP_USER_NAME" "$WP_USER_EMAIL" --user_pass="$WP_USER_PASS" --role="$WP_USER_ROLE" --allow-root --debug
+
+# Controlla la creazione dell'utente
+if [ $? -ne 0 ]; then
+    echo "[ERROR] User creation failed."
+    exit 1
+fi
+# #create a new user with the given username, email, password and role
+# wp user create "$WP_USER_NAME" "$WP_USER_EMAIL" --user_pass="$WP_USER_PASS" --role="$WP_USER_ROLE" --allow-root --debug
 
 #---------------------------------------------------php config---------------------------------------------------#
 
