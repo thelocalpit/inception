@@ -1,17 +1,17 @@
 #!/bin/bash
-#---------------------------------------------------wp installation---------------------------------------------------#
+
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 # wp-cli permission
 chmod +x wp-cli.phar
 # wp-cli move to bin
 mv wp-cli.phar /usr/local/bin/wp
-
 # go to wordpress directory
 cd /var/www/wordpress
 # give permission to wordpress directory
 chmod -R 755 /var/www/wordpress/
 # change owner of wordpress directory to www-data
 chown -R www-data:www-data /var/www/wordpress
+
 #---------------------------------------------------ping mariadb---------------------------------------------------#
 # Funzione per controllare se MariaDB è in esecuzione
 check_mariadb() {
@@ -33,10 +33,9 @@ done
 
 if [ $(date +%s) -ge $end_time ]; then
     echo "[========MARIADB IS NOT RESPONDING========]"
-    exit 1 # Esci con un errore se MariaDB non risponde
+    exit 1 
 fi
 
-# -lt: Questa è ancora una condizione di confronto che significa "minore di". Il loop continuerà finché $SECONDS è minore di $end_time.
 #---------------------------------------------------wp installation---------------------------------------------------#
 
 # download wordpress core files
@@ -44,7 +43,7 @@ wp core download --allow-root
 # create wp-config.php file with database details
 wp core config --dbhost=mariadb:3306 --dbname="$DB_NAME" --dbuser="$DB_USER" --dbpass="$DB_PASS" --allow-root
 # install wordpress with the given title, admin username, password and email
-wp core install --url="$URL_DOMAIN_NAME" --title="$WP_TITLE" --admin_user="$WP_ADMIN_NAME" --admin_password="$WP_ADMIN_PASS" --allow-root
+wp core install --url="$URL_DOMAIN_NAME" --title="$WP_TITLE" --admin_user="$WP_ADMIN_NAME" --admin_password="$WP_ADMIN_PASS" --admin_email="$WP_ADMIN_E" --allow-root
 #create a new user with the given username, email, password and role
 wp user create "$WP_USER_NAME" --user_pass="$WP_USER_PASS" --role="$WP_USER_ROLE" --allow-root
 
@@ -54,5 +53,8 @@ wp user create "$WP_USER_NAME" --user_pass="$WP_USER_PASS" --role="$WP_USER_ROLE
 sed -i '36 s@/run/php/php7.4-fpm.sock@9000@' /etc/php/7.4/fpm/pool.d/www.conf
 # create a directory for php-fpm
 mkdir -p /run/php
+
 # start php-fpm service in the foreground to keep the container running
 /usr/sbin/php-fpm7.4 -F
+
+

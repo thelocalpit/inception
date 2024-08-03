@@ -37,6 +37,9 @@ clean:
 	@docker network rm $$(docker network ls -q) || true
 	@rm -rf $(WP_DATA) $(DB_DATA) || true
 
+prune: clean
+	@docker system prune -a --volumes -f
+
 # Target per ricostruire e avviare
 re: clean up
 

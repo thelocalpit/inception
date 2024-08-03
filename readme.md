@@ -20,7 +20,7 @@ Per testare la persistenza dei dati in un volume Docker e verificare che un nuov
        image: mariadb:latest
        container_name: mariadb_test
        environment:
-         MYSQL_ROOT_PASSWORD: rootpassword
+         DB_ROOT_PASSWORD: rootpassword
          MYSQL_DATABASE: testdb
        volumes:
          - mariadb:/var/lib/mysql
@@ -92,7 +92,7 @@ Per testare la persistenza dei dati in un volume Docker e verificare che un nuov
        image: mariadb:latest
        container_name: mariadb_test_2
        environment:
-         MYSQL_ROOT_PASSWORD: rootpassword
+         DB_ROOT_PASSWORD: rootpassword
          MYSQL_DATABASE: testdb
        volumes:
          - mariadb:/var/lib/mysql
