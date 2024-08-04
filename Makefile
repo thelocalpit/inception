@@ -4,8 +4,8 @@
 # DB_DATA = ~/goinfre/data/mariadb
 
 #linux
-WP_DATA = /home/doriani/data/wordpress
-DB_DATA = /home/doriani/data/mariadb
+WP_DATA = /home/pfalasch/data/wordpress
+DB_DATA = /home/pfalasch/data/mariadb
 
 all: up
 
