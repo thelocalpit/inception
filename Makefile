@@ -1,10 +1,16 @@
-WP_DATA = ~/goinfre/data/wordpress
-DB_DATA = ~/goinfre/data/mariadb
+WP_DATA = /home/pfalasch/data/wordpress
+DB_DATA = /home/pfalasch/data/mariadb
 
 all: up
 
+
+setup:
+	@if ! grep -q "127.0.0.1 pfalasch.42.fr" /etc/hosts; then \
+		echo "127.0.0.1 pfalasch.42.fr" | sudo tee -a /etc/hosts; \
+	fi
+
 # Target per avviare i servizi
-up: create_dirs build
+up: create_dirs setup build
 	docker-compose -f ./srcs/docker-compose.yml up -d
 
 # Target per creare le directory

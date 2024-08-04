@@ -42,6 +42,8 @@ services:
       - "443:443"
     depends_on:
       - wordpress
+    expose:
+      - 3306
     volumes:
       - wordpress:/var/www/wordpress
     networks:
@@ -54,6 +56,8 @@ services:
     build: ./requirements/wordpress
     depends_on:
       - mariadb
+    expose:
+      - 9000
     volumes:
       - wordpress:/var/www/wordpress
     env_file :

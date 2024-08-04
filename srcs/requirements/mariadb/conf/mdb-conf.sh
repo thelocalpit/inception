@@ -1,5 +1,3 @@
-#!/bin/bash
-
 #--------------mariadb start--------------#
 service mariadb start # start mariadb
 sleep 5 # wait for mariadb to start

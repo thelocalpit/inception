@@ -2,7 +2,7 @@
 
 # Scarica wp-cli
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-chmod +x wp-cli.phar
+chmod 755 wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
 
 # Vai alla directory di WordPress
@@ -12,29 +12,29 @@ cd /var/www/wordpress
 chmod -R 755 /var/www/wordpress/
 chown -R www-data:www-data /var/www/wordpress
 
-#---------------------------------------------------ping mariadb---------------------------------------------------#
-# Funzione per controllare se MariaDB è in esecuzione
-check_mariadb() {
-    mysqladmin ping -h mariadb --silent
-}
+# #---------------------------------------------------ping mariadb---------------------------------------------------#
+# # Funzione per controllare se MariaDB è in esecuzione
+# check_mariadb() {
+#     mysqladmin ping -h mariadb --silent
+# }
 
-start_time=$(date +%s)
-end_time=$((start_time + 30))
+# start_time=$(date +%s)
+# end_time=$((start_time + 30))
 
-while [ $(date +%s) -lt $end_time ]; do
-    if check_mariadb; then
-        echo "[MARIADB IS UP"
-        break
-    else
-        echo "[WAITING...]"
-        sleep 2
-    fi
-done
+# while [ $(date +%s) -lt $end_time ]; do
+#     if check_mariadb; then
+#         echo "[MARIADB IS UP"
+#         break
+#     else
+#         echo "[WAITING...]"
+#         sleep 2
+#     fi
+# done
 
-if [ $(date +%s) -ge $end_time ]; then
-    echo "[MARIADB IS NOT WORKING]"
-    exit 1
-fi
+# if [ $(date +%s) -ge $end_time ]; then
+#     echo "[MARIADB IS NOT WORKING]"
+#     exit 1
+# fi
 
 #---------------------------------------------------wp installation---------------------------------------------------#
 
@@ -57,17 +57,9 @@ fi
 
 # Crea un nuovo utente se non esiste già
 if ! wp user get "$WP_USER_NAME" --allow-root; then
-    echo "Creating user with:"
-    echo "Username: $WP_USER_NAME"
-    echo "Email: $WP_USER_EMAIL"
-    echo "Role: $WP_USER_ROLE"
 
-    wp user create "$WP_USER_NAME" "$WP_USER_EMAIL" --user_pass="$WP_USER_PASS" --role="$WP_USER_ROLE" --allow-root --debug
+    wp user create "$WP_USER_NAME" "$WP_USER_EMAIL" --user_pass="$WP_USER_PASS" --role="$WP_USER_ROLE" --allow-root
 
-    if [ $? -ne 0 ]; then
-        echo "[ERROR] User creation failed."
-        exit 1
-    fi
 else
     echo "[USER $WP_USER_NAME ALREADY EXISTS]"
 fi

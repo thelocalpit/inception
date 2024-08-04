@@ -20,4 +20,4 @@ RUN mkdir -p /var/www/wordpress
 RUN chown -R www-data:www-data /var/www/wordpress
 
 # define the command to run when the container starts
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

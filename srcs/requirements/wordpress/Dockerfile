@@ -9,4 +9,4 @@ COPY ./conf/wp-conf.sh /
 
 RUN  chmod +x wp-conf.sh
 
-ENTRYPOINT ["./wp-conf.sh"]
+ENTRYPOINT ["/bin/bash", "./wp-conf.sh"]
