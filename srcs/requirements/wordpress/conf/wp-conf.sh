@@ -11,6 +11,7 @@ cd /var/www/wordpress
 # Imposta i permessi della directory di WordPress
 chmod -R 755 /var/www/wordpress/
 chown -R www-data:www-data /var/www/wordpress
+# chown -R root:root /var/www/wordpress
 
 # #---------------------------------------------------ping mariadb---------------------------------------------------#
 # # Funzione per controllare se MariaDB è in esecuzione
