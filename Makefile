@@ -1,5 +1,5 @@
-WP_DATA = /home/pfalasch/data/wordpress
-DB_DATA = /home/pfalasch/data/mariadb
+WP_DATA = ~/goinfre/data/wordpress
+DB_DATA = ~/goinfre/data/mariadb
 
 all: up
 
