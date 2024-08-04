@@ -1,5 +1,11 @@
-WP_DATA = ~/goinfre/data/wordpress
-DB_DATA = ~/goinfre/data/mariadb
+
+#mac
+# WP_DATA = ~/goinfre/data/wordpress
+# DB_DATA = ~/goinfre/data/mariadb
+
+#linux
+WP_DATA = /home/doriani/data/wordpress
+DB_DATA = /home/doriani/data/mariadb
 
 all: up
 
