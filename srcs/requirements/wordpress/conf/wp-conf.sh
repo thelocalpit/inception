@@ -11,31 +11,30 @@ cd /var/www/wordpress
 # Imposta i permessi della directory di WordPress
 chmod -R 755 /var/www/wordpress/
 chown -R www-data:www-data /var/www/wordpress
-# chown -R root:root /var/www/wordpress
 
 # #---------------------------------------------------ping mariadb---------------------------------------------------#
-# # Funzione per controllare se MariaDB è in esecuzione
-# check_mariadb() {
-#     mysqladmin ping -h mariadb --silent
-# }
+# Funzione per controllare se MariaDB è in esecuzione
+check_mariadb() {
+    mysqladmin ping -h mariadb --silent
+}
 
-# start_time=$(date +%s)
-# end_time=$((start_time + 30))
+start_time=$(date +%s)
+end_time=$((start_time + 30))
 
-# while [ $(date +%s) -lt $end_time ]; do
-#     if check_mariadb; then
-#         echo "[MARIADB IS UP"
-#         break
-#     else
-#         echo "[WAITING...]"
-#         sleep 2
-#     fi
-# done
+while [ $(date +%s) -lt $end_time ]; do
+    if check_mariadb; then
+        echo "[MARIADB IS UP"
+        break
+    else
+        echo "[WAITING...]"
+        sleep 2
+    fi
+done
 
-# if [ $(date +%s) -ge $end_time ]; then
-#     echo "[MARIADB IS NOT WORKING]"
-#     exit 1
-# fi
+if [ $(date +%s) -ge $end_time ]; then
+    echo "[MARIADB IS NOT WORKING]"
+    exit 1
+fi
 
 #---------------------------------------------------wp installation---------------------------------------------------#
 
