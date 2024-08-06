@@ -18,29 +18,21 @@ check_mariadb() {
     mysqladmin ping -h mariadb --silent
 }
 
+# Funzione per controllare se il database è stato creato
+check_database() {
+    mysql -h mariadb -u"$DB_USER" -p"$DB_PASS" -e "USE $DB_NAME;" > /dev/null 2>&1
+}
+
+# Attesa per MariaDB e il database
 start_time=$(date +%s)
-end_time=$((start_time + 60))
+end_time=$((start_time + 60)) # Aumenta il tempo di attesa a 60 secondi
 
 while [ $(date +%s) -lt $end_time ]; do
-    if check_mariadb; then
-        echo "[MARIADB IS UP"
+    if check_mariadb && check_database; then
+        echo "[MARIADB AND DATABASE $DB_NAME ARE READY]" >> $LOG_FILE
         break
     else
-        echo "[WAITING...]"
-        sleep 2
-    fi
-done
-
-if [ $(date +%s) -ge $end_time ]; then
-    echo "[MARIADB IS NOT WORKING]"
-    exit 1
-fi
-
-# Attesa per la creazione del database
-while [ $(date +%s) -lt $end_time ]; do
-    if check_database; then
-        break
-    else
+        echo "[WAITING FOR MARIADB AND DATABASE $DB_NAME...]" >> $LOG_FILE
         sleep 2
     fi
 done
