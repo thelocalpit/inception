@@ -9,7 +9,7 @@ cd /var/www/wordpress
 chmod -R 755 /var/www/wordpress/
 chown -R www-data:www-data /var/www/wordpress
 
-# #---------------------------------------------------ping mariadb---------------------------------------------------#
+
 check_mariadb() {
     mysqladmin ping -h mariadb --silent
 }
@@ -18,9 +18,9 @@ check_database() {
     mysql -h mariadb -u"$DB_USER" -p"$DB_PASS" -e "USE $DB_NAME;" > /dev/null 2>&1
 }
 
-# Attesa per MariaDB e il database
+
 start_time=$(date +%s)
-end_time=$((start_time + 60)) # Aumenta il tempo di attesa a 60 secondi
+end_time=$((start_time + 60))
 
 while [ $(date +%s) -lt $end_time ]; do
     if check_mariadb && check_database; then
@@ -30,7 +30,6 @@ while [ $(date +%s) -lt $end_time ]; do
     fi
 done
 
-#---------------------------------------------------wp installation---------------------------------------------------#
 
 if [ ! -f wp-config.php ]; then
 
