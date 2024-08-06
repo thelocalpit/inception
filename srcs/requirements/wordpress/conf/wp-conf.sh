@@ -56,6 +56,12 @@ else
     echo "[WORDPRESS IS ALREADY INSTALLED]"
 fi
 
+if wp user get "$WP_ADMIN_NAME" --allow-root; then
+    echo "admin exist: "$WP_ADMIN_NAME""
+else
+    echo "admin doesn´t exixst"
+fi
+
 # Crea un nuovo utente se non esiste già
 if ! wp user get "$WP_USER_NAME" --allow-root; then
 
