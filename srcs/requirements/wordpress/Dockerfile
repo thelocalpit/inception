@@ -2,7 +2,11 @@ FROM debian:bullseye
 
 RUN apt-get update && apt-get upgrade -y
 
-RUN apt-get install -y curl php php7.4-fpm php-mysql mariadb-client 
+RUN apt-get install -y curl \
+    php8.1 \
+    php8.1-fpm \
+    php8.1-mysql \
+    mariadb-client
 
 COPY ./conf/wp-conf.sh /
 
