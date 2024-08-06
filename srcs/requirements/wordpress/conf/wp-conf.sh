@@ -19,7 +19,7 @@ check_mariadb() {
 }
 
 start_time=$(date +%s)
-end_time=$((start_time + 30))
+end_time=$((start_time + 60))
 
 while [ $(date +%s) -lt $end_time ]; do
     if check_mariadb; then
