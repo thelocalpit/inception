@@ -38,8 +38,7 @@ clean:
 	@docker volume rm $$(docker volume ls -q) || true
 	@docker network rm $$(docker network ls -q) || true
 	@rm -rf $(WP_DATA) $(DB_DATA) || true
-
-
+	@docker system prune -a --volumes -f || true
 
 re: clean up
 
