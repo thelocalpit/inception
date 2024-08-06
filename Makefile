@@ -1,7 +1,4 @@
 
-#mac
-# WP_DATA = ~/goinfre/data/wordpress
-# DB_DATA = ~/goinfre/data/mariadb
 
 #linux
 WP_DATA = /home/pfalasch/data/wordpress
@@ -15,32 +12,25 @@ setup:
 		echo "127.0.0.1 pfalasch.42.fr" | sudo tee -a /etc/hosts; \
 	fi
 
-# Target per avviare i servizi
 up: create_dirs setup build
 	docker-compose -f ./srcs/docker-compose.yml up -d
 
-# Target per creare le directory
 create_dirs:
 	@mkdir -p $(WP_DATA) $(DB_DATA)
 
-# Target per fermare i servizi e rimuovere i container e le reti
 down:
 	docker-compose -f ./srcs/docker-compose.yml down
 
-# Target per fermare i servizi senza rimuoverli
 stop:
 	docker-compose -f ./srcs/docker-compose.yml stop
 
-# Target per avviare i servizi
 start:
 	docker-compose -f ./srcs/docker-compose.yml start
 
-# Target per costruire le immagini
 build:
 	@clear
 	docker-compose -f ./srcs/docker-compose.yml build
 
-# Target per pulire l'ambiente Docker
 clean:
 	@docker stop $$(docker ps -qa) || true
 	@docker rm $$(docker ps -qa) || true
@@ -52,11 +42,19 @@ clean:
 prune: clean
 	@docker system prune -a --volumes -f
 
-# Target per ricostruire e avviare
 re: clean up
 
-# Dichiarazione dei target come phony
 .PHONY: all up down stop start build clean re create_dirs
+
+
+
+
+
+
+
+
+
+
 
 
 # docker ps: Questo comando mostra i container Docker attualmente in esecuzione. Di default, visualizza solo i container attivi.
