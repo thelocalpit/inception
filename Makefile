@@ -1,6 +1,3 @@
-
-
-#linux
 WP_DATA = /home/pfalasch/data/wordpress
 DB_DATA = /home/pfalasch/data/mariadb
 
